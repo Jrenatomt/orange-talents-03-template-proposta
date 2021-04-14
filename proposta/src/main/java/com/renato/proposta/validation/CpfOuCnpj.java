@@ -25,9 +25,9 @@ import org.hibernate.validator.constraints.br.CPF;
 public @interface CpfOuCnpj {
 
 	String message() default "CPF ou CNPJ Inválido";
+	
 	Class<?>[] groups() default { };
+	
 	Class<? extends Payload>[] payload() default { };
-	String fieldName();
-	Class<?> domainClass();
 }
 

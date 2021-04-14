@@ -15,20 +15,20 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping(value = "/propostas")
-public class PropostaControlle {
-	
+public class PropostaController {
+
 	@Autowired
 	private PropostaRepository repository;
-	
+
 	@PostMapping
 	@Transactional
 	public ResponseEntity<?> criaProposta(@RequestBody @Valid PropostaRequest request) {
 		Proposta novaProposta = request.toModel();
 		repository.save(novaProposta);
-		
+
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(novaProposta.getId()).toUri();
-		
+
 		return ResponseEntity.created(uri).build();
 	}
 }

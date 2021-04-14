@@ -5,17 +5,21 @@ import java.math.BigDecimal;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 
 import com.renato.proposta.validation.CpfOuCnpj;
+import com.renato.proposta.validation.ProibiCpfOuCnpjDuplicadoValid;
 
+@ProibiCpfOuCnpjDuplicadoValid
 public class PropostaRequest {
 	
 	@NotBlank
 	private String nome;
 	@NotBlank @Email
 	private String email;
-	@NotBlank @CpfOuCnpj(domainClass = Proposta.class, fieldName = "documento")
+	@NotBlank @CpfOuCnpj
+	@Pattern(regexp = "([0-9]{11})|([0-9]{14})")
 	private String documento;
 	@NotBlank
 	private String endereco;
