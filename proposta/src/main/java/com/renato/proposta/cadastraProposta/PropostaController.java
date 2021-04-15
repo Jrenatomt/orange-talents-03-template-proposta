@@ -13,18 +13,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.renato.proposta.analisaProposta.AnalisaCliente;
+
 @RestController
-@RequestMapping(value = "/propostas")
+@RequestMapping(value = "/api/propostas")
 public class PropostaController {
 
 	@Autowired
 	private PropostaRepository repository;
+	@Autowired
+	private AnalisaCliente analiseCliente;
 
 	@PostMapping
 	@Transactional
 	public ResponseEntity<?> criaProposta(@RequestBody @Valid PropostaRequest request) {
 		Proposta novaProposta = request.toModel();
 		repository.save(novaProposta);
+		
+		novaProposta.analisaProposta(analiseCliente);
 
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(novaProposta.getId()).toUri();

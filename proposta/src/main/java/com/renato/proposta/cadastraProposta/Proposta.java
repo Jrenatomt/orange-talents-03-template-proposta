@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +17,12 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 import org.springframework.util.Assert;
+
+import com.renato.proposta.analisaProposta.AnalisaCliente;
+import com.renato.proposta.analisaProposta.AnalisaClienteRequest;
+import com.renato.proposta.analisaProposta.AnalisaClienteResponse;
+
+import feign.FeignException;
 
 @Entity
 public class Proposta {
@@ -29,6 +37,8 @@ public class Proposta {
 	private @NotNull @Positive BigDecimal salario;
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private LocalDateTime criadoEm;
+	@Enumerated(EnumType.STRING)
+	private StatusProposta status = StatusProposta.NAO_ELEGIVEL;
 
 	@Deprecated
 	public Proposta() {
@@ -71,7 +81,7 @@ public class Proposta {
 	public BigDecimal getSalario() {
 		return salario;
 	}
-	
+
 	public LocalDateTime getCriadoEm() {
 		return criadoEm;
 	}
@@ -104,5 +114,15 @@ public class Proposta {
 		} else if (!documento.equals(other.documento))
 			return false;
 		return true;
+	}
+
+	public void analisaProposta(AnalisaCliente analiseCliente) {
+		AnalisaClienteRequest analiseRequest = new AnalisaClienteRequest(this);
+		try {
+			AnalisaClienteResponse response = analiseCliente.consultaAnalise(analiseRequest);
+			this.status = response.analisaStatus();
+		} catch (FeignException.UnprocessableEntity e) {
+			this.status = StatusProposta.NAO_ELEGIVEL;
+		}
 	}
 }
