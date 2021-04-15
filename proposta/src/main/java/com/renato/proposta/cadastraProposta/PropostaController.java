@@ -28,6 +28,7 @@ public class PropostaController {
 	@Transactional
 	public ResponseEntity<?> criaProposta(@RequestBody @Valid PropostaRequest request) {
 		Proposta novaProposta = request.toModel();
+		
 		repository.save(novaProposta);
 		
 		novaProposta.analisaProposta(analiseCliente);
