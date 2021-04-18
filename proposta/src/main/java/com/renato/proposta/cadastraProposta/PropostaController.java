@@ -32,7 +32,7 @@ public class PropostaController {
 		repository.save(novaProposta);
 		
 		novaProposta.analisaProposta(analiseCliente);
-
+       System.out.println("cadastrando");
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(novaProposta.getId()).toUri();
 

@@ -3,6 +3,7 @@ package com.renato.proposta.cadastraProposta;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -10,6 +11,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -21,6 +23,7 @@ import org.springframework.util.Assert;
 import com.renato.proposta.analisaProposta.AnalisaCliente;
 import com.renato.proposta.analisaProposta.AnalisaClienteRequest;
 import com.renato.proposta.analisaProposta.AnalisaClienteResponse;
+import com.renato.proposta.solicitacaoCartao.Cartao;
 
 import feign.FeignException;
 
@@ -39,6 +42,9 @@ public class Proposta {
 	private LocalDateTime criadoEm;
 	@Enumerated(EnumType.STRING)
 	private StatusProposta status = StatusProposta.NAO_ELEGIVEL;
+
+	@OneToOne(cascade = CascadeType.MERGE)
+	private Cartao cartao;
 
 	@Deprecated
 	public Proposta() {
@@ -86,6 +92,10 @@ public class Proposta {
 		return criadoEm;
 	}
 
+	public Cartao getCartao() {
+		return cartao;
+	}
+
 	@PrePersist
 	public void prePersist() {
 		criadoEm = LocalDateTime.now();
@@ -124,5 +134,9 @@ public class Proposta {
 		} catch (FeignException.UnprocessableEntity e) {
 			this.status = StatusProposta.NAO_ELEGIVEL;
 		}
+	}
+
+	public void adicionaCartao(Cartao cartao) {
+		this.cartao = cartao;
 	}
 }
