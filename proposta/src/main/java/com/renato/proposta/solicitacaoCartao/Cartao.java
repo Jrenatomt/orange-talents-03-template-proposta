@@ -2,14 +2,17 @@ package com.renato.proposta.solicitacaoCartao;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.renato.proposta.cadastraProposta.Proposta;
+import com.renato.proposta.cadastroBiometria.Biometria;
 
 @Entity
 public class Cartao {
@@ -23,6 +26,8 @@ public class Cartao {
 	private BigDecimal limite;
 	@OneToOne
 	private Proposta proposta;
+	@OneToMany(mappedBy = "cartao")
+	private Set<Biometria> biometrias;
 	
 	@Deprecated
 	public Cartao(){
@@ -59,6 +64,10 @@ public class Cartao {
 
 	public Proposta getProposta() {
 		return proposta;
+	}
+	
+	public Set<Biometria> getBiometrias() {
+		return biometrias;
 	}
 
 	@Override
