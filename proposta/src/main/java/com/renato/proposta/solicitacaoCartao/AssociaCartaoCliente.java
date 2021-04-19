@@ -19,7 +19,7 @@ public class AssociaCartaoCliente {
 	@Autowired
 	private SolicitaCartaoCliente solicitaCartaoCliente;
 
-	@Scheduled(fixedDelay = 10000)
+	@Scheduled(fixedDelayString = "${timing.fixedDelay}", initialDelayString = "${timing.initialDelay}")
 	public void salvaCartao() {
 		System.out.println("iniciando");
 		List<Proposta> listaPropostaSemCartao = propostaRepository.findAllByStatusAndCartaoIsNull(StatusProposta.ELEGIVEL);
