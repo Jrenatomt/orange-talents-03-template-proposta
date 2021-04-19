@@ -95,6 +95,10 @@ public class Proposta {
 	public Cartao getCartao() {
 		return cartao;
 	}
+	
+	public StatusProposta getStatus() {
+		return status;
+	}
 
 	@PrePersist
 	public void prePersist() {
