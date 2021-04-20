@@ -1,5 +1,10 @@
-INSERT INTO PROPOSTA (documento, email, endereco, criado_em, nome, salario, status) VALUES ('36192211035', 'maria@email.com', 'Rua indiana, 11', '2021-03-14 15:35:58.477438', 'Maria do Teste Silva', '1800', 'NAO_ELEGIVEL');
-INSERT INTO PROPOSTA (documento, email, endereco, criado_em, nome, salario, status) VALUES ('67783457053', 'carlos@email.com', 'Rua indiana, 11', '2021-03-14 15:35:58.477438', 'Carlos do Teste Silva', '1800', 'ELEGIVEL');
+INSERT INTO PROPOSTA (documento, email, endereco, criado_em, nome, salario, status) 
+VALUES ('36192211035', 'maria@email.com', 'Rua indiana, 11', '2021-03-14 15:35:58.477438', 'Maria do Teste Silva', '1800', 'NAO_ELEGIVEL');
+INSERT INTO PROPOSTA (documento, email, endereco, criado_em, nome, salario, status) 
+VALUES ('67783457053', 'carlos@email.com', 'Rua indiana, 11', '2021-03-14 15:35:58.477438', 'Carlos do Teste Silva', '1800', 'ELEGIVEL');
+
+INSERT INTO CARTAO(numero_cartao, emitido_em, titular, limite, proposta_id) 
+VALUES ('5209-1622-1164-3586','2021-03-10T08:47:08.644', 'Carlos do Teste Silva', 1000, 2);
 
 
 

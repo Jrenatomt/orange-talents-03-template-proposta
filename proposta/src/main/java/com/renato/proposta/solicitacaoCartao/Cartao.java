@@ -2,6 +2,7 @@ package com.renato.proposta.solicitacaoCartao;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -27,7 +28,7 @@ public class Cartao {
 	@OneToOne
 	private Proposta proposta;
 	@OneToMany(mappedBy = "cartao")
-	private Set<Biometria> biometrias;
+	private Set<Biometria> biometrias = new HashSet<>();;
 	
 	@Deprecated
 	public Cartao(){
