@@ -1,11 +1,16 @@
 package com.renato.proposta.analisaProposta;
 
+import javax.validation.constraints.NotBlank;
+
 import com.renato.proposta.cadastraProposta.Proposta;
 
 public class AnalisaClienteRequest {
 	
+	@NotBlank
 	private String documento;
+	@NotBlank
 	private String nome;
+	@NotBlank
 	private String idProposta;
 
 	public AnalisaClienteRequest(Proposta novaProposta) {

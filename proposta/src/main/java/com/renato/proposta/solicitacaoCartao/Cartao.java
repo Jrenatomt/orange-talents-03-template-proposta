@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 
 import com.renato.proposta.bloqueioCartao.BloqueioCartao;
 import com.renato.proposta.bloqueioCartao.BloqueioRequest;
@@ -27,14 +29,18 @@ public class Cartao {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@NotBlank
 	private String numeroCartao;
+	@NotBlank
 	private LocalDateTime emitidoEm;
+	@NotBlank
 	private String titular;
+	@Positive @NotBlank
 	private BigDecimal limite;
 	@Enumerated(EnumType.STRING)
 	private StatusCartao status = StatusCartao.ATIVO;
 	@OneToOne
-	private Proposta proposta;
+	private @Valid Proposta proposta;
 	@OneToMany(mappedBy = "cartao")
 	private Set<Biometria> biometrias = new HashSet<>();
 	@OneToOne(mappedBy = "cartao")

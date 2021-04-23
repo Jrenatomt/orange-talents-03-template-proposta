@@ -1,11 +1,16 @@
 package com.renato.proposta.solicitacaoCartao;
 
+import javax.validation.constraints.NotBlank;
+
 import com.renato.proposta.cadastraProposta.Proposta;
 
 public class SolicitaCartaoRequest {
 
+	@NotBlank
 	private String documento;
+	@NotBlank
 	private String nome;
+	@NotBlank
 	private String idProposta;
 	
 	@Deprecated
