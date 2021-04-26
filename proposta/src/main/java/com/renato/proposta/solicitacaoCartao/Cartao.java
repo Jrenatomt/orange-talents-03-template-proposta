@@ -17,6 +17,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 
+import com.renato.proposta.avisoViagem.AvisoViagem;
 import com.renato.proposta.bloqueioCartao.BloqueioCartao;
 import com.renato.proposta.bloqueioCartao.BloqueioRequest;
 import com.renato.proposta.bloqueioCartao.BloqueioResponse;
@@ -45,6 +46,8 @@ public class Cartao {
 	private Set<Biometria> biometrias = new HashSet<>();
 	@OneToOne(mappedBy = "cartao")
 	private BloqueioCartao bloqueioCartao;
+	@OneToMany(mappedBy = "cartao")
+	private Set<AvisoViagem> avisosViagens = new HashSet<>();
 
 	@Deprecated
 	public Cartao() {
