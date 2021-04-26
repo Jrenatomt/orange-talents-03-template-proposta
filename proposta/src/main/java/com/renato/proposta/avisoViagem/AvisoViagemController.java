@@ -17,6 +17,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.renato.proposta.solicitacaoCartao.Cartao;
 import com.renato.proposta.solicitacaoCartao.CartaoRepository;
+import com.renato.proposta.solicitacaoCartao.IntegracaoCartaoCliente;
+
+import feign.FeignException;
 
 @RestController
 @RequestMapping(value = "/api/cartoes")
@@ -24,10 +27,14 @@ public class AvisoViagemController {
 	
 	private final AvisoViagemRepository repository;
 	private final CartaoRepository cartaoRepository;
+	private final IntegracaoCartaoCliente integracaoCartaoCliente;
 	
-	public AvisoViagemController(AvisoViagemRepository repository, CartaoRepository cartaoRepository) {
+	public AvisoViagemController(AvisoViagemRepository repository, 
+			CartaoRepository cartaoRepository, 
+			IntegracaoCartaoCliente integracaoCartaoCliente) {
 		this.repository = repository;
 		this.cartaoRepository = cartaoRepository;
+		this.integracaoCartaoCliente = integracaoCartaoCliente;
 	}
 
 	@PostMapping(value = "/{idCartao}/avisos")
@@ -50,10 +57,15 @@ public class AvisoViagemController {
 		Cartao cartao = cartaoRepository.findById(idCartao)
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cartão não encontrado"));
 		
+		try {
 		AvisoViagem novoAvisoViagem = request.toModel(cartao, ipCliente, userAgent);
-		
+		AvisoViagemResponse response = integracaoCartaoCliente.avisarViagem(cartao.getNumeroCartao(), novoAvisoViagem.toRequest());
+		if(response.getResultado().equals("CRIADO"));
 		repository.save(novoAvisoViagem);
-		
+		System.out.println("chegou aqui!!!");
+		}catch(FeignException e) {
+			throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Erro na API de avisos");
+		}
 		return ResponseEntity.ok().build();
 	}
 }

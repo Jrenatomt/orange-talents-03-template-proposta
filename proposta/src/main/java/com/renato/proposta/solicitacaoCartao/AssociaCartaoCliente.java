@@ -17,7 +17,7 @@ public class AssociaCartaoCliente {
 	private PropostaRepository propostaRepository;
 	
 	@Autowired
-	private SolicitaCartaoCliente solicitaCartaoCliente;
+	private IntegracaoCartaoCliente solicitaCartaoCliente;
 
 	@Scheduled(fixedDelayString = "${timing.fixedDelay}", initialDelayString = "${timing.initialDelay}")
 	public void salvaCartao() {

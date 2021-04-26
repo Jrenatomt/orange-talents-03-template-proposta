@@ -71,4 +71,8 @@ public class AvisoViagem {
 	public Cartao getCartao() {
 		return cartao;
 	}
+
+	public AvisoViagemRequest toRequest() {
+		return new AvisoViagemRequest(this);
+	}
 }

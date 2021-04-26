@@ -18,7 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.renato.proposta.solicitacaoCartao.Cartao;
 import com.renato.proposta.solicitacaoCartao.CartaoRepository;
-import com.renato.proposta.solicitacaoCartao.SolicitaCartaoCliente;
+import com.renato.proposta.solicitacaoCartao.IntegracaoCartaoCliente;
 
 import feign.FeignException;
 
@@ -28,11 +28,11 @@ public class BloqueioCartaoController {
 
 	private CartaoRepository cartaoRepository;
     private BloqueioCartaoRepository bloqueioCartaoRepository;
-	private SolicitaCartaoCliente solicitaCartaoCliente;
+	private IntegracaoCartaoCliente solicitaCartaoCliente;
 	
 	public BloqueioCartaoController(CartaoRepository cartaoRepository,
 			BloqueioCartaoRepository bloqueioCartaoRepository,
-			SolicitaCartaoCliente solicitaCartaoCliente) {
+			IntegracaoCartaoCliente solicitaCartaoCliente) {
 		this.cartaoRepository = cartaoRepository;
 		this.bloqueioCartaoRepository = bloqueioCartaoRepository;
 		this.solicitaCartaoCliente = solicitaCartaoCliente;

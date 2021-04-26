@@ -5,7 +5,7 @@ INSERT INTO PROPOSTA (id, documento, email, endereco, criado_em, nome, salario, 
 VALUES (2,'67783457053', 'carlos@email.com', 'Rua indiana, 11', '2021-03-14 15:35:58.477448', 'Carlos do Teste Silva', '2800', 'ELEGIVEL');
 
 INSERT INTO PROPOSTA (id, documento, email, endereco, criado_em, nome, salario, status) 
-VALUES (3,'11211887707', 'email@email.com', 'Rua indiana, 11', '2021-03-14 15:35:58.477478', 'renato do Teste Silva', '2900', 'ELEGIVEL');
+VALUES (3,'02494953090', 'email@email.com', 'Rua indiana, 11', '2021-03-14 15:35:58.477478', 'renato do Teste Silva', '2900', 'ELEGIVEL');
 
 INSERT INTO CARTAO(id, numero_cartao, emitido_em, titular, limite, proposta_id, status) 
 VALUES (1,'5209-1622-1164-6666','2021-04-22T13:22:08.08929', 'Carlos do Teste Silva', '3511', 2, 'BLOQUEADO');

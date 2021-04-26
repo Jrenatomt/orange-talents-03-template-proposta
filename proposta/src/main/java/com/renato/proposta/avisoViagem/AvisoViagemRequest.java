@@ -6,6 +6,7 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.renato.proposta.solicitacaoCartao.Cartao;
 
 public class AvisoViagemRequest {
@@ -13,17 +14,18 @@ public class AvisoViagemRequest {
 	@NotBlank
 	private String destino;
     @NotNull @Future
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDate terminoViagem;
 
 	@Deprecated
 	public AvisoViagemRequest() {
 	}
 
-	public AvisoViagemRequest(@NotBlank String destino, @NotNull @Future LocalDate terminoViagem) {
-		this.destino = destino;
-		this.terminoViagem = terminoViagem;
+	public AvisoViagemRequest(AvisoViagem avisoViagem) {
+		this.destino = avisoViagem.getDestino();
+		this.terminoViagem = avisoViagem.getTerminoViagem();
 	}
-
+	
 	public String getDestino() {
 		return destino;
 	}

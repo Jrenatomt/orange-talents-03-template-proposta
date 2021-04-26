@@ -21,7 +21,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.renato.proposta.bloqueioCartao.BloqueioRequest;
 import com.renato.proposta.bloqueioCartao.BloqueioResponse;
-import com.renato.proposta.solicitacaoCartao.SolicitaCartaoCliente;
+import com.renato.proposta.solicitacaoCartao.IntegracaoCartaoCliente;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -35,7 +35,7 @@ public class BloqueiaCartaoControllerTests {
 	private ObjectMapper objectMapper;
 
 	@MockBean
-	private SolicitaCartaoCliente MockSolicitaCartao;
+	private IntegracaoCartaoCliente MockSolicitaCartao;
 
 	private BloqueioRequest request;
 	private String jsonBody;

@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 import com.renato.proposta.avisoViagem.AvisoViagem;
@@ -32,11 +33,11 @@ public class Cartao {
 	private Long id;
 	@NotBlank
 	private String numeroCartao;
-	@NotBlank
+	@NotNull
 	private LocalDateTime emitidoEm;
 	@NotBlank
 	private String titular;
-	@Positive @NotBlank
+	@NotNull @Positive 
 	private BigDecimal limite;
 	@Enumerated(EnumType.STRING)
 	private StatusCartao status = StatusCartao.ATIVO;
@@ -89,17 +90,11 @@ public class Cartao {
 		return biometrias;
 	}
 
-	@Override
-	public String toString() {
-		return "Cartao [id=" + id + ", numeroCartao=" + numeroCartao + ", emitidoEm=" + emitidoEm + ", titular="
-				+ titular + ", limite=" + limite + ", proposta=" + proposta + "]";
-	}
-
 	public boolean bloqueado() {
 		return status == StatusCartao.BLOQUEADO;
 	}
 
-	public void atualizaStatus(SolicitaCartaoCliente solicitaCartaoCliente, @Valid BloqueioRequest request) {
+	public void atualizaStatus(IntegracaoCartaoCliente solicitaCartaoCliente, @Valid BloqueioRequest request) {
 		BloqueioResponse response = solicitaCartaoCliente.bloqueiaCartao(numeroCartao, request);
 		 this.status = response.atualizaStatusCartao();
 	}
