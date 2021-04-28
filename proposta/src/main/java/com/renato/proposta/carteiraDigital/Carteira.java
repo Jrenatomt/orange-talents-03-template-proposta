@@ -1,5 +1,5 @@
 package com.renato.proposta.carteiraDigital;
 
 public enum Carteira {
-   PAYPAL
+   PAYPAL, SAMSUNG_PAY;
 }
