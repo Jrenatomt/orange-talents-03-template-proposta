@@ -9,6 +9,8 @@ import com.renato.proposta.avisoViagem.AvisoViagemRequest;
 import com.renato.proposta.avisoViagem.AvisoViagemResponse;
 import com.renato.proposta.bloqueioCartao.BloqueioRequest;
 import com.renato.proposta.bloqueioCartao.BloqueioResponse;
+import com.renato.proposta.carteiraDigital.CarteiraDigitalRequest;
+import com.renato.proposta.carteiraDigital.CarteiraDigitalResponse;
 
 @FeignClient(name = "cartaoCliente", url = "${cartao.api}")
 public interface IntegracaoCartaoCliente {
@@ -21,6 +23,9 @@ public interface IntegracaoCartaoCliente {
 	
 	@PostMapping("/{id}/avisos")
 	public AvisoViagemResponse avisarViagem(@PathVariable String id, @RequestBody AvisoViagemRequest request);
+	
+	@PostMapping("/{id}/carteiras")
+	public CarteiraDigitalResponse associarCarteira(@PathVariable String id, @RequestBody CarteiraDigitalRequest request);
 
 }
 

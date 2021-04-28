@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,6 +25,8 @@ import com.renato.proposta.bloqueioCartao.BloqueioRequest;
 import com.renato.proposta.bloqueioCartao.BloqueioResponse;
 import com.renato.proposta.cadastraProposta.Proposta;
 import com.renato.proposta.cadastroBiometria.Biometria;
+import com.renato.proposta.carteiraDigital.Carteira;
+import com.renato.proposta.carteiraDigital.CarteiraDigital;
 
 @Entity
 public class Cartao {
@@ -49,6 +52,8 @@ public class Cartao {
 	private BloqueioCartao bloqueioCartao;
 	@OneToMany(mappedBy = "cartao")
 	private Set<AvisoViagem> avisosViagens = new HashSet<>();
+	@OneToMany(mappedBy = "cartao", fetch = FetchType.EAGER)
+	private Set<CarteiraDigital> carteiras = new HashSet<>();
 
 	@Deprecated
 	public Cartao() {
@@ -89,6 +94,10 @@ public class Cartao {
 	public Set<Biometria> getBiometrias() {
 		return biometrias;
 	}
+	
+	public Set<CarteiraDigital> getCarteiras() {
+		return carteiras;
+	}
 
 	public boolean bloqueado() {
 		return status == StatusCartao.BLOQUEADO;
@@ -97,5 +106,9 @@ public class Cartao {
 	public void atualizaStatus(IntegracaoCartaoCliente solicitaCartaoCliente, @Valid BloqueioRequest request) {
 		BloqueioResponse response = solicitaCartaoCliente.bloqueiaCartao(numeroCartao, request);
 		 this.status = response.atualizaStatusCartao();
+	}
+
+	public boolean verificaSeEstaAssociado(Carteira carteira) {
+		return carteiras.stream().anyMatch(wallet -> wallet.getCarteiras().equals(carteira));
 	}
 }
