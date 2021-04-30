@@ -5,6 +5,7 @@ import java.util.Optional;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
@@ -25,7 +26,7 @@ public class ProibiCpfOuCnpjDuplicadoValidator implements ConstraintValidator<Pr
 	@Override
 	public boolean isValid(PropostaRequest request, ConstraintValidatorContext context) {
 		
-		Optional<Proposta> documentoExistente = repository.findByDocumento(request.getDocumento());
+		Optional<Proposta> documentoExistente = repository.findByHashDocumento(DigestUtils.sha256Hex(request.getDocumento()));
 
 		if (documentoExistente.isPresent()) {
 			throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Já existe uma proposta em andamento para este cliente");

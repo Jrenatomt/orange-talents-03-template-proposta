@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -18,11 +19,13 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.util.Assert;
 
 import com.renato.proposta.analisaProposta.AnalisaCliente;
 import com.renato.proposta.analisaProposta.AnalisaClienteRequest;
 import com.renato.proposta.analisaProposta.AnalisaClienteResponse;
+import com.renato.proposta.config.EncryptorConverter;
 import com.renato.proposta.solicitacaoCartao.Cartao;
 
 import feign.FeignException;
@@ -35,7 +38,11 @@ public class Proposta {
 	private Long id;
 	private @NotBlank String nome;
 	private @NotBlank @Email String email;
+	@Column(columnDefinition = "TEXT")
+	@Convert(converter = EncryptorConverter.class)
 	private @NotBlank String documento;
+	@Column(columnDefinition = "TEXT")
+    private @NotBlank String hashDocumento;
 	private @NotBlank String endereco;
 	private @NotNull @Positive BigDecimal salario;
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
@@ -54,7 +61,8 @@ public class Proposta {
 			@NotBlank String endereco, @NotNull @Positive BigDecimal salario) {
 		this.nome = nome;
 		this.email = email;
-		this.documento = documento.replaceAll("[.-]", "");
+		this.documento = documento;
+		this.hashDocumento = DigestUtils.sha256Hex(documento);
 		this.endereco = endereco;
 		this.salario = salario;
 		Assert.hasLength(documento, "Documento é obrigatório");
