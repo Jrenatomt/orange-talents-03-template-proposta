@@ -46,12 +46,10 @@ public class BloqueioCartaoController {
 		String ipCliente = infoRequest.getRemoteAddr();
 
 		if (userAgent.isEmpty()) {
-			System.out.println("user agente não achando");
 			return ResponseEntity.badRequest().build();
 		}
 
 		if (!StringUtils.hasText(ipCliente)) {
-			System.out.println("ip nao encontrado");
             return ResponseEntity.badRequest().build();
 	    }
 
@@ -66,7 +64,6 @@ public class BloqueioCartaoController {
 			cartaoParaBloqueio.atualizaStatus(solicitaCartaoCliente, request);
 			BloqueioCartao cartao = new BloqueioCartao(cartaoParaBloqueio, ipCliente, userAgent);
 			bloqueioCartaoRepository.save(cartao);
-			System.out.println("bloqueio realizado com sucesso");
 		} catch (FeignException e) {
 			throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Erro na api de bloqueio");
 		}

@@ -44,12 +44,10 @@ public class AvisoViagemController {
 		String ipCliente = infoRequest.getRemoteAddr();
 
 		if (userAgent.isEmpty()) {
-			System.out.println("user agente não achando");
 			return ResponseEntity.badRequest().build();
 		}
 
 		if (!StringUtils.hasText(ipCliente)) {
-			System.out.println("ip nao encontrado");
 			return ResponseEntity.badRequest().build();
 
 		}
@@ -62,7 +60,6 @@ public class AvisoViagemController {
 		AvisoViagemResponse response = integracaoCartaoCliente.avisarViagem(cartao.getNumeroCartao(), novoAvisoViagem.toRequest());
 		if(response.getResultado().equals("CRIADO"));
 		repository.save(novoAvisoViagem);
-		System.out.println("chegou aqui!!!");
 		}catch(FeignException e) {
 			throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Erro na API de avisos");
 		}

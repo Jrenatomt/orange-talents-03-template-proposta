@@ -19,8 +19,8 @@ public class EncryptorConverter implements AttributeConverter<String, String> {
     }
 
     @Override
-    public String convertToDatabaseColumn(String attribute) {
-        return encryptor().encrypt(attribute);
+    public String convertToDatabaseColumn(String atributo) {
+        return encryptor().encrypt(atributo);
     }
 
     @Override

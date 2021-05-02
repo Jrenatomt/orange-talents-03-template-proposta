@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +27,7 @@ import com.renato.proposta.solicitacaoCartao.IntegracaoCartaoCliente;
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
+@ActiveProfiles("test")
 public class BloqueiaCartaoControllerTests {
 
 	@Autowired
@@ -35,7 +37,7 @@ public class BloqueiaCartaoControllerTests {
 	private ObjectMapper objectMapper;
 
 	@MockBean
-	private IntegracaoCartaoCliente MockSolicitaCartao;
+	private IntegracaoCartaoCliente mockSolicitaCartao;
 
 	private BloqueioRequest request;
 	private String jsonBody;
@@ -49,7 +51,7 @@ public class BloqueiaCartaoControllerTests {
 	@Test
 	public void deveriaBloquearCartaoERetornar200() throws Exception {
 
-		when(MockSolicitaCartao.bloqueiaCartao(eq("5209-1622-1164-1234"), any())).thenReturn(new BloqueioResponse("BLOQUEADO"));
+		when(mockSolicitaCartao.bloqueiaCartao(eq("5209-1622-1164-1234"), any())).thenReturn(new BloqueioResponse("BLOQUEADO"));
 
 		mockMvc.perform(post("/api/cartoes/2/bloquear")
 				.header(HttpHeaders.USER_AGENT, "User-Agent")

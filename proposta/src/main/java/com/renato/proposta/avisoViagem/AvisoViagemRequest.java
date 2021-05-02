@@ -20,6 +20,11 @@ public class AvisoViagemRequest {
 	@Deprecated
 	public AvisoViagemRequest() {
 	}
+	
+	public AvisoViagemRequest(@NotBlank String destino, @NotNull @Future LocalDate terminoViagem) {
+		this.destino = destino;
+		this.terminoViagem = terminoViagem;
+	}
 
 	public AvisoViagemRequest(AvisoViagem avisoViagem) {
 		this.destino = avisoViagem.getDestino();

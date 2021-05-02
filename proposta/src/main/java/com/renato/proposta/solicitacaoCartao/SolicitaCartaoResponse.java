@@ -50,13 +50,5 @@ public class SolicitaCartaoResponse {
 
 	public Cartao toModel(Proposta proposta) {
 		return new Cartao(this.numeroCartao, this.emitidoEm, this.titular, this.limite, proposta);
-	}
-
-	@Override
-	public String toString() {
-		return "CartaoResponse [numeroCartao=" + numeroCartao + ", emitidoEm=" + emitidoEm + ", titular=" + titular
-				+ ", limite=" + limite + ", idProposta=" + idProposta + "]";
-	}
-	
-	
+	}	
 }

@@ -57,7 +57,7 @@ public class CadastroBiometriaControllerTests {
 	}
 	
 	@Test
-	public void criaBiometriaNaoDeveriaCriarNovaBiometriaComCartaoInvalido() throws JsonProcessingException, Exception {
+	public void criaBiometriaNaoDeveriaCriarNovaBiometriaComCartaoNaoExistente() throws JsonProcessingException, Exception {
 
 		BiometriaRequest biometria = new BiometriaRequest("1627265721");
 		String jsonBody = objectMapper.writeValueAsString(biometria);
@@ -65,6 +65,6 @@ public class CadastroBiometriaControllerTests {
 		mockMvc.perform(post("/api/cartoes/5/biometrias")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(jsonBody))
-				.andExpect(status().isUnprocessableEntity());
+				.andExpect(status().isNotFound());
 	}
 }
